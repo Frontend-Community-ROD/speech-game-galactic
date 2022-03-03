@@ -1,0 +1,142 @@
+* {
+    padding: 0;
+    margin : 0;
+}
+
+body {
+    height     : 100vh;
+    background : #584040;
+    display    : flex;
+    align-items: center;
+}
+
+.container {
+    width : 920px;
+    height: 280px;
+    margin: 0 auto;
+
+    position: relative;
+
+    background: linear-gradient(#b7d6c7, transparent) #ffe2d1;
+    transition: background-color 1s linear;
+    overflow  : hidden;
+}
+
+.player {
+    width : 100px;
+    height: 84px;
+
+    position: absolute;
+    bottom  : 22px;
+    left    : 42px;
+    z-index : 3;
+
+    background-image: url('./img/nave.png');
+    background-size      : cover;
+    background-position-x: 0px;
+
+}
+
+.background {
+    width          : 200%;
+    height         : 100%;
+    bottom         : 0;
+    left           : 0;
+    position       : absolute;
+    background     : url('./img/background.jpg') repeat-x 0px 0px;
+    background-size: contain;
+
+}
+
+.rock {
+    width : 100px;
+    height: 100px;
+
+    position: absolute;
+    bottom  : 16px;
+    left    : 600px;
+    z-index : 2;
+
+    background-image: url('./img/rock.png');
+    background-size : cover;
+}
+
+.score {
+    width : 100px;
+    height: 30px;
+
+    position: absolute;
+    top     : 5px;
+    right   : 15px;
+    z-index : 10;
+
+    color      : #d48871;
+    font-family: Verdana;
+    font-size  : 30px;
+    font-weight: bold;
+    text-align : right;
+}
+
+.game-over {
+    display: none;
+
+    position: absolute;
+    width   : 100%;
+
+
+    text-align : center;
+    color      : #7e928b;
+    font-size  : 30px;
+    font-family: Verdana;
+    font-weight: 700;
+}
+
+.restart-button {
+    position: absolute;
+    width   : 10%;
+    bottom: 20%;
+
+    text-align : center;
+}
+
+.restart-button button{
+    height: 25px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+@keyframes moveUp {
+    0% {
+        bottom: 22px;
+    }
+
+    100% {
+        bottom: 180px;
+    }
+}
+
+@keyframes moveDown {
+    0% {
+        bottom: 180px;
+    }
+
+    100% {
+        bottom: 22px;
+    }
+}
+
+.moveUp{
+    animation-name: moveUp;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.moveDown{
+    animation-name: moveDown;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.hidden{
+    display: none;
+}
