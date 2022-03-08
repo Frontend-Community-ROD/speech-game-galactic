@@ -1,4 +1,4 @@
-// SPEECH RECONGNITION
+// SPEECH RECOGNITION
 let voiceInfo = document.getElementById("voice-info");
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
@@ -8,11 +8,11 @@ var controls = ['arriba', 'abajo' ];
 var grammar = '#JSGF V1.0; grammar controls; public <control> = ' + controls.join(' | ') + ' ;';
 
 const speechControlsHandlers = {
-  'abajo': () => MoverplayerAbajo(),
-  'arriba': () => MoverplayerArriba()
+  'abajo': () => moverPlayerAbajo(),
+  'arriba': () => moverPlayerArriba()
 }
 
-let recognitionStarted = false;
+let recognitionstarted = false;
 
 var recognition = new SpeechRecognition();
 var speechRecognitionList = new SpeechGrammarList();
@@ -27,13 +27,13 @@ recognition.maxAlternatives = 1;
 
 document.body.onclick = function() {
 
-  if (recognitionStarted) {
+  if (recognitionstarted) {
     console.log('Already capturing...');
     return;
   }
 
   recognition.start();
-  recognitionStarted = true;
+  recognitionstarted = true;
   console.log('Ready to receive a commands.');
 }
 
@@ -60,28 +60,28 @@ recognition.onend = function() {
 
 // GAME
 
-//****** GAME LOOP ********//
+//****** GAME loop ********//
 
 let time = new Date();
 let deltaTime = 0;
 
 if(document.readyState === "complete" || document.readyState === "interactive"){
-    setTimeout(Init, 1);
+    setTimeout(init, 1);
 }else{
-    document.addEventListener("DOMContentLoaded", Init); 
+    document.addEventListener("DOMContentLoaded", init); 
 }
 
-function Init() {
+function init() {
     time = new Date();
-    Start();
-    Loop();
+    start();
+    loop();
 }
 
-function Loop() {
+function loop() {
     deltaTime = (new Date() - time) / 1000;
     time = new Date();
-    Update();
-    requestAnimationFrame(Loop);
+    update();
+    requestAnimationFrame(loop);
 }
 
 //****** GAME LOGIC ********//
@@ -115,69 +115,69 @@ let gameOver;
 let randomTopNumber;
 let restartButton;
 
-function Start() {
+function start() {
     gameOver = document.querySelector(".game-over");
     background = document.querySelector(".background");
     container = document.querySelector(".container");
     textoScore = document.querySelector(".score");
     player = document.querySelector(".player");
-    document.addEventListener("keydown", HandleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 }
 
-function Update() {
+function update() {
     if(parado) return;
     
-    Moverbackground();
-    DecidirCrearObstaculos();
-    MoverObstaculos();
-    DetectarColision();
-    GanarPuntos();
+    moverBackground();
+    decidirCrearObstaculos();
+    moverObstaculos();
+    detectarColision();
+    ganarPuntos();
 
     velY -= gravedad * deltaTime;
 
 }
 
-function HandleKeyDown(ev){
+function handleKeyDown(ev){
 
     if(ev.keyCode == 33){
-        MoverplayerArriba();
+        moverPlayerArriba();
     }
     if (ev.keyCode == 34){
-        MoverplayerAbajo();
+        moverPlayerAbajo();
     }
 }
 
-function MoverplayerArriba() {
+function moverPlayerArriba() {
     player.classList.remove("moveDown");
     player.classList.add("moveUp");    
 }
 
-function MoverplayerAbajo(){
+function moverPlayerAbajo(){
     player.classList.remove("moveUp"); 
     player.classList.add("moveDown");
 }
 
-function Moverbackground() {
-    backgroundX += CalcularDesplazamiento();
+function moverBackground() {
+    backgroundX += calcularDesplazamiento();
     background.style.left = -(backgroundX % container.clientWidth) + "px";
 }
 
-function CalcularDesplazamiento() {
+function calcularDesplazamiento() {
     return velEscenario * deltaTime * gameVel;
 }
 
-function Estrellarse() {
+function estrellarse() {
     parado = true;
 }
 
-function DecidirCrearObstaculos() {
+function decidirCrearObstaculos() {
     tiempoHastaObstaculo -= deltaTime;
     if(tiempoHastaObstaculo <= 0) {
-        CrearObstaculo();
+        crearObstaculo();
     }
 }
 
-function CrearObstaculo() {
+function crearObstaculo() {
     randomTopNumber = Math.random() * 4;
     let obstaculo = document.createElement("div");
     container.appendChild(obstaculo);
@@ -192,19 +192,19 @@ function CrearObstaculo() {
     tiempoHastaObstaculo = tiempoObstaculoMin + Math.random() * (tiempoObstaculoMax-tiempoObstaculoMin) / gameVel;
 }
 
-function MoverObstaculos() {
+function moverObstaculos() {
     for (let i = obstaculos.length - 1; i >= 0; i--) {
         if(obstaculos[i].posX < -obstaculos[i].clientWidth) {
             obstaculos[i].parentNode.removeChild(obstaculos[i]);
             obstaculos.splice(i, 1);
         }else{
-            obstaculos[i].posX -= CalcularDesplazamiento();
+            obstaculos[i].posX -= calcularDesplazamiento();
             obstaculos[i].style.left = obstaculos[i].posX+"px";
         }
     }
 }
 
-function GanarPuntos() {
+function ganarPuntos() {
     score++;
     textoScore.innerText = score;
     if(score == 1500){
@@ -218,24 +218,24 @@ function GanarPuntos() {
 }
 
 function GameOver() {
-    Estrellarse();
+    estrellarse();
     gameOver.style.display = "block";
 }
 
-function DetectarColision() {
+function detectarColision() {
     for (let i = 0; i < obstaculos.length; i++) {
         if(obstaculos[i].posX > playerPosX + player.clientWidth) {
             //EVADE
             break; //al estar en orden, no puede chocar con más
         }else{
-            if(IsCollision(player, obstaculos[i], 10, 30, 15, 20)) {
+            if(isCollision(player, obstaculos[i], 10, 30, 15, 20)) {
                 GameOver();
             }
         }
     }
 }
 
-function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
+function isCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
     let aRect = a.getBoundingClientRect();
     let bRect = b.getBoundingClientRect();
 
@@ -247,6 +247,6 @@ function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft)
     );
 }
 
-function ReiniciarNivel(){
+function reiniciarNivel(){
     location.reload();
 }
