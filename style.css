@@ -4,16 +4,31 @@
 }
 
 body {
-    height     : 100vh;
     background : #584040;
-    display    : flex;
-    align-items: center;
+}
+
+main {
+
+    padding: 2rem;
+    width: 80%;
+    margin: 4rem auto;
+    text-align: center;
+    font-family: 'Source Code Pro';
+}
+
+h1 {
+    font-family: 'Press Start 2P';
+    color: #D5896F
+}
+
+p {
+    margin-top: 2rem;
 }
 
 .container {
     width : 920px;
     height: 280px;
-    margin: 0 auto;
+    margin: 3rem auto;
 
     position: relative;
 
@@ -79,30 +94,25 @@ body {
 
 .game-over {
     display: none;
-
-    position: absolute;
-    width   : 100%;
-
-
     text-align : center;
-    color      : #7e928b;
+    color: #D5896F;
     font-size  : 30px;
     font-family: Verdana;
     font-weight: 700;
+    margin: 2rem 0px;
 }
 
+.game-controllers {
+    text-align: center;
+}
 .restart-button {
-    position: absolute;
-    width   : 10%;
-    bottom: 20%;
-
-    text-align : center;
-}
-
-.restart-button button{
-    height: 25px;
-    width: 100px;
-    border-radius: 5px;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    border: 0px;
+    background-color: #70A288;
+    font-family: 'Press Start 2P';
+    margin: 1rem 0px;
+    cursor: pointer
 }
 
 @keyframes moveUp {
