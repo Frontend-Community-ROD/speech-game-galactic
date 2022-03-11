@@ -86,14 +86,7 @@ function loop() {
 
 //****** GAME LOGIC ********//
 
-let backgroundY = 22;
-let velY = 0;
-let impulso = 900;
-let gravedad = 2500;
-
 let playerPosX = 42;
-let playerPosY = backgroundY; 
-
 let backgroundX = 0;
 let velEscenario = 950/3;
 let gameVel = 1;
@@ -104,7 +97,6 @@ let parado = false;
 let tiempoHastaObstaculo = 2;
 let tiempoObstaculoMin = 1.9;
 let tiempoObstaculoMax = 2.9;
-let obstaculoPosY = 16;
 let obstaculos = [];
 
 let container;
@@ -113,7 +105,6 @@ let textoScore;
 let background;
 let gameOver;
 let randomTopNumber;
-let restartButton;
 
 function start() {
     gameOver = document.querySelector(".game-over");
@@ -132,9 +123,6 @@ function update() {
     moverObstaculos();
     detectarColision();
     ganarPuntos();
-
-    velY -= gravedad * deltaTime;
-
 }
 
 function handleKeyDown(ev){
